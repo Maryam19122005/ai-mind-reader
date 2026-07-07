@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+/* ─── Tailwind v4: class-based dark mode ─── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ─── Design Tokens ─── */
+@theme {
+  --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-game: 'Orbitron', monospace;
+
+  --color-brand-purple: #8b5cf6;
+  --color-brand-indigo: #6366f1;
+  --color-brand-pink:   #ec4899;
+  --color-brand-gold:   #eab308;
+  --color-brand-dark:   #0f172a;
+  --color-brand-darker: #020617;
+}
+
+/* ════════════════════════════════════════════
+   CSS THEME VARIABLES
+   Light = default  |  Dark = .dark on <html>
+════════════════════════════════════════════ */
+:root {
+  /* Backgrounds */
+  --bg-base:          #eef1ff;
+  --bg-nav:           rgba(238,241,255,0.92);
+  --bg-surface:       rgba(255, 255, 255, 0.72);
+  --bg-surface-2:     rgba(255, 255, 255, 0.9);
+  --bg-card:          rgba(255, 255, 255, 0.85);
+  --bg-input:         rgba(241, 245, 249, 0.9);
+  --bg-overlay:       rgba(230,235,255,0.85);
+
+  /* Text */
+  --text-primary:     #0f172a;
+  --text-secondary:   #475569;
+  --text-muted:       #64748b;
+  --text-faint:       #94a3b8;
+
+  /* Borders */
+  --border-color:     rgba(148, 163, 184, 0.3);
+  --border-subtle:    rgba(148, 163, 184, 0.15);
+  --border-strong:    rgba(100, 116, 139, 0.4);
+
+  /* Scrollbar */
+  --scroll-track:     #e2e8f0;
+  --scroll-thumb:     #94a3b8;
+  --scroll-hover:     #64748b;
+
+  /* Shadows */
+  --shadow-card:      0 4px 24px rgba(100,80,200,0.08);
+  --shadow-navbar:    0 1px 20px rgba(100,80,200,0.06);
+}
+
+:root.dark {
+  /* Backgrounds */
+  --bg-base:          #020617;
+  --bg-nav:           rgba(2, 6, 23, 0.95);
+  --bg-surface:       rgba(30, 41, 59, 0.45);
+  --bg-surface-2:     rgba(30, 41, 59, 0.7);
+  --bg-card:          rgba(15, 23, 42, 0.6);
+  --bg-input:         rgba(15, 23, 42, 0.8);
+  --bg-overlay:       rgba(2, 6, 23, 0.8);
+
+  /* Text */
+  --text-primary:     #f8fafc;
+  --text-secondary:   #94a3b8;
+  --text-muted:       #64748b;
+  --text-faint:       #475569;
+
+  /* Borders */
+  --border-color:     rgba(255, 255, 255, 0.05);
+  --border-subtle:    rgba(255, 255, 255, 0.03);
+  --border-strong:    rgba(255, 255, 255, 0.1);
+
+  /* Scrollbar */
+  --scroll-track:     #1e293b;
+  --scroll-thumb:     #475569;
+  --scroll-hover:     #64748b;
+
+  /* Shadows */
+  --shadow-card:      0 4px 24px rgba(0,0,0,0.4);
+  --shadow-navbar:    0 1px 20px rgba(0,0,0,0.3);
+}
+
+/* ════════════════════════════════════════════
+   GLOBAL STYLES
+════════════════════════════════════════════ */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}
+
+/* Exclude transitions from things that shouldn't be slow */
+button, a, input, textarea, select {
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+              color 0.15s ease, box-shadow 0.2s ease, transform 0.15s ease,
+              opacity 0.15s ease;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* ─── Custom Scrollbars ─── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--scroll-track); }
+::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scroll-hover); }
+
+/* ════════════════════════════════════════════
+   GLASS PANEL — theme-aware
+════════════════════════════════════════════ */
+.glass-panel {
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+}
+
+.glass-panel-hover:hover {
+  background: var(--bg-surface-2);
+  border-color: var(--border-strong);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.08);
+}
+
+.glass-card-purple {
+  background: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(99,102,241,0.06));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+/* ─── Glow Utilities ─── */
+.gold-glow   { text-shadow: 0 0 12px rgba(234, 179,   8, 0.5); }
+.purple-glow { text-shadow: 0 0 12px rgba(139,  92, 246, 0.5); }
+.border-gold-glow   { box-shadow: 0 0 15px rgba(234, 179,   8, 0.2); }
+.border-purple-glow { box-shadow: 0 0 15px rgba(139,  92, 246, 0.2); }
+
+/* ─── Theme-aware text helpers ─── */
+.app-text         { color: var(--text-primary); }
+.app-text-secondary { color: var(--text-secondary); }
+.app-text-muted   { color: var(--text-muted); }
+.app-bg           { background-color: var(--bg-base); }
+.app-surface      { background-color: var(--bg-surface); }
+.app-border       { border-color: var(--border-color); }
+.app-nav-bg       { background-color: var(--bg-nav); }
+.app-input        { background-color: var(--bg-input); color: var(--text-primary); }
+
+/* ════════════════════════════════════════════
+   LIGHT MODE OVERRIDES
+   For Tailwind classes hard-coded in components
+════════════════════════════════════════════ */
+html.light .bg-slate-950 { background-color: var(--bg-base) !important; }
+html.light .bg-slate-900 { background-color: rgba(255,255,255,0.8) !important; }
+html.light .bg-slate-800 { background-color: rgba(241,245,249,0.9) !important; }
+html.light .bg-slate-950\/80, html.light .bg-slate-950\/90 { background-color: rgba(238,241,255,0.9) !important; }
+
+html.light .text-slate-100 { color: #1e293b !important; }
+html.light .text-slate-200 { color: #334155 !important; }
+html.light .text-slate-300 { color: #475569 !important; }
+html.light .text-slate-400 { color: #64748b !important; }
+html.light .text-slate-500 { color: #94a3b8 !important; }
+
+html.light .border-slate-800,
+html.light .border-slate-900 { border-color: rgba(148,163,184,0.35) !important; }
+html.light .border-slate-700 { border-color: rgba(100,116,139,0.4) !important; }
+
+html.light select,
+html.light input[type="text"],
+html.light input[type="date"],
+html.light input[type="time"],
+html.light textarea {
+  background-color: rgba(255,255,255,0.9) !important;
+  color: #0f172a !important;
+  border-color: rgba(148,163,184,0.4) !important;
+}
+html.light select option { background: #fff; color: #0f172a; }
+
+html.light .bg-slate-900\/40,
+html.light .bg-slate-900\/60,
+html.light .bg-slate-900\/80 { background-color: rgba(255,255,255,0.7) !important; }
+
+html.light nav { background-color: var(--bg-nav) !important; border-color: rgba(148,163,184,0.2) !important; }
+
+/* ════════════════════════════════════════════
+   ANIMATIONS & KEYFRAMES
+════════════════════════════════════════════ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(-18px) scale(1.03); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes orb-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -40px) scale(1.1); }
+  66%       { transform: translate(-20px, 20px) scale(0.95); }
+}
+@keyframes orb-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-35px, 25px) scale(1.05); }
+  66%       { transform: translate(25px, -30px) scale(0.9); }
+}
+@keyframes orb-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(20px, 35px) scale(1.08); }
+}
+
+@keyframes xpFill {
+  from { width: 0%; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1);    opacity: 0.7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(139,92,246,0.3); }
+  50%       { box-shadow: 0 0 20px rgba(139,92,246,0.6); }
+}
+
+@keyframes text-glow {
+  0%, 100% { text-shadow: 0 0 8px rgba(139,92,246,0.4); }
+  50%       { text-shadow: 0 0 20px rgba(139,92,246,0.8); }
+}
+
+/* ─── Utility animation classes ─── */
+.animate-float       { animation: float     4s ease-in-out infinite; }
+.animate-float-slow  { animation: floatSlow 7s ease-in-out infinite; }
+.animate-pulse-slow  { animation: pulse     3s cubic-bezier(.4,0,.6,1) infinite; }
+.animate-fade-scale  { animation: fadeInScale 0.4s ease-out forwards; }
+.task-card-enter     { animation: slideIn 0.3s ease-out forwards; }
+.animate-pulse-ring  { animation: pulse-ring 1.8s ease-out infinite; }
+.animate-glow-pulse  { animation: glow-pulse 2.5s ease-in-out infinite; }
+.animate-text-glow   { animation: text-glow  2.5s ease-in-out infinite; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+  background-size: 200% auto;
+  animation: shimmer 2s linear infinite;
+}
+
+/* ─── Decorative orbs ─── */
+.orb-1 { animation: orb-1 12s ease-in-out infinite; }
+.orb-2 { animation: orb-2 15s ease-in-out infinite; }
+.orb-3 { animation: orb-3 10s ease-in-out infinite; }
+
+/* ─── XP Bar fill animation ─── */
+.xp-bar-fill { animation: xpFill 1s cubic-bezier(.22,.68,0,1.2) forwards; }
+
+/* ─── Page transition wrapper ─── */
+.page-enter { animation: fadeInScale 0.35s ease-out; }
