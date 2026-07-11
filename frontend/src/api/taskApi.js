@@ -7,7 +7,7 @@ import { format, addDays } from 'date-fns';
  */
 export async function parseTask(rawText) {
   try {
-    const response = await axiosInstance.post('/guess', { taskText: rawText });
+   const response = await axiosInstance.post('/parse-task', { taskText: rawText });
     return response.data;
   } catch (error) {
     console.warn('Backend parse-task failed or is offline. Using local parsing fallback.');
