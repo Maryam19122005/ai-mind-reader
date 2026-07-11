@@ -25,7 +25,10 @@ export async function POST(req: NextRequest) {
 Extract the following from the user's text:
 - title: short clear task name
 - subject: the subject/course (if mentioned, otherwise "General")
-- dueDate: the deadline in YYYY-MM-DD format (if a day is mentioned like "Monday", calculate the next occurring Monday from today's date; if no date mentioned, use null)
+- dueDate: the deadline in YYYY-MM-DD format. You will be given today's date and day of week.
+  When the user mentions a day name (like "Monday", "next Monday", or "next week Monday"), 
+  always interpret it as the NEAREST upcoming occurrence of that day, counting forward from today one day at a time. 
+  Do NOT skip an extra week unless the user explicitly says "in two weeks" or gives a specific date far in the future.
 - priority: "low", "medium", or "high" (guess based on urgency words like "urgent", "exam", or how soon the deadline is)
 
 Respond ONLY in this exact JSON format, nothing else, no markdown, no backticks:
@@ -36,8 +39,10 @@ Respond ONLY in this exact JSON format, nothing else, no markdown, no backticks:
       systemInstruction: systemPrompt,
     });
 
-    const today = new Date().toISOString().split('T')[0];
-    const userMessage = `Today's date is ${today}. Student's task: "${taskText}"`;
+    const todayDate = new Date();
+    const today = todayDate.toISOString().split('T')[0];
+    const dayName = todayDate.toLocaleDateString('en-US', { weekday: 'long' });
+    const userMessage = `Today's date is ${today}, which is a ${dayName}. Student's task: "${taskText}"`;
 
     const rawText = await callGeminiWithRetry(model, userMessage);
 
