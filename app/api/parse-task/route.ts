@@ -3,6 +3,19 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
+
+
+
 async function callGeminiWithRetry(model: any, userMessage: string, retries = 2): Promise<string> {
   for (let i = 0; i <= retries; i++) {
     try {
@@ -49,12 +62,21 @@ Respond ONLY in this exact JSON format, nothing else, no markdown, no backticks:
     const cleaned = rawText.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(cleaned);
 
-    return NextResponse.json(parsed);
+    return NextResponse.json(parsed, {
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+  },
+});
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json(
-      { error: 'Something went wrong, try again!' },
-      { status: 500 }
-    );
+  { error: 'Something went wrong, try again!' },
+  { 
+    status: 500,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  }
+);
   }
 }
